@@ -19,6 +19,8 @@ class IndexView(ListView):
     # モデルBlogPostのオブジェクトにorder_by()を適用して
     # BlogPostのレコードを投稿日時の降順で並び替える
     queryset = BlogPost.objects.order_by('-posted_at')
+    # 1ページに表示するレコードの件数
+    paginate_by = 4
 
 class BlogDetail(DetailView):
     """
@@ -30,4 +32,11 @@ class BlogDetail(DetailView):
     # post.htmlをレンダリングする
     template_name = 'post.html'
     # クラス変数modelにBlogPostを設定
+    model = BlogPost
+
+class TechView(ListView):
+    """
+    技術的なこと(tech)カテゴリの記事を一覧するビュー
+    """
+    template_name = 'tech_list.html'
     model = BlogPost

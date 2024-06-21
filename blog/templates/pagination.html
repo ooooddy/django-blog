@@ -1,0 +1,36 @@
+<!-- is_paginated表示結果が分割されているかどうかを示すブール値
+ オブジェクトの工数がpaginate_byと等しいか、それ以下の場合にはFalseがセットされる -->
+{% if is_paginated %}
+  <ul class="pagination" style="justify-content: center;">
+  <!-- 前ページへのリンク　page.has_previous:前ページがある場合にTrueを返す -->
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a href="?page={{ page_obj.previous_page_number }}" aria-label="Previous" class="page-link">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {% endif %}
+    <!-- ページ数の表示　pagi nator.page_range:[1, 2, 3, 4]のように1から始まる番号 -->
+    {% for num in paginator.page_range %}
+    <!-- ページ番号が存在しない場合
+      page.number:1から数えたページ番号 -->
+      {% if page_obj.number == num %}
+        <li class="page-item active">
+          <span class="page-link">{{ num }}</span>
+        </li>
+        {% else %}
+        <li class="page-item">
+          <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+    <!-- 次のページがある場合にTrueを返す -->
+    {% if page_obj.has_next %}
+      <li class="page-item">
+        <a href="?page={{ page_obj.next_page_number }}" aria-label="Next" class="page-link">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+{% endif %}
